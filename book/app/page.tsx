@@ -73,7 +73,7 @@ export default function Home() {
         </div>
         <div
           className={
-            dateValid
+            dateValid && emailValid
               ? "opacity-100 transition-all flex flex-col gap-4"
               : "opacity-30 transition-all flex flex-col gap-4"
           }
