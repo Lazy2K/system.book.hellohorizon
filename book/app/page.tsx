@@ -84,7 +84,7 @@ export default function Home() {
           <RadioGroup
             label="Available times"
             className="w-full px-0 mx-0"
-            isDisabled={!dateValid}
+            isDisabled={!dateValid || !emailValid}
           >
             {demoTimes.map((item, index) => {
               return <CustomRadio value={item.time}>{item.time}</CustomRadio>;
