@@ -1,9 +1,10 @@
 "use client";
 
-import { Calendar } from "@nextui-org/calendar";
+import { Calendar, DateValue } from "@nextui-org/calendar";
 import { Input } from "@nextui-org/input";
 import { RadioGroup } from "@nextui-org/radio";
 import { today, getLocalTimeZone } from "@internationalized/date";
+import { parseDate } from "@internationalized/date";
 import { CustomRadio } from "@/components/custom/radio/customradio";
 import { useMemo, useState } from "react";
 import { Button } from "@nextui-org/button";
@@ -16,8 +17,14 @@ const validateEmail = (email: string) => {
   return email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i) ? true : false;
 };
 
+const validateDate = (date: DateValue | undefined) => {
+  if (date != undefined && date != null) return true;
+  return false;
+};
+
 export default function Home() {
   const [email, setEmail] = useState("");
+  const [date, setDate] = useState<DateValue>();
   const [emailValid, setEmailValid] = useState(false);
   const [dateValid, setDateValid] = useState(false);
 
@@ -26,6 +33,12 @@ export default function Home() {
     setEmailValid(isValid);
     return isValid;
   }, [email]);
+
+  const isValidDate = useMemo(() => {
+    const isValid = validateDate(date);
+    setDateValid(isValid);
+    return isValid;
+  }, [date]);
 
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -51,6 +64,8 @@ export default function Home() {
             Pick a date that suits
           </h1>
           <Calendar
+            value={date}
+            onChange={setDate}
             minValue={today(getLocalTimeZone())}
             isDisabled={!emailValid}
             calendarWidth="100%"
@@ -66,7 +81,11 @@ export default function Home() {
           <h1 className="text-3xl font-semibold tracking-tight">
             Pick a time that works
           </h1>
-          <RadioGroup label="Available times" className="w-full px-0 mx-0">
+          <RadioGroup
+            label="Available times"
+            className="w-full px-0 mx-0"
+            isDisabled={!dateValid}
+          >
             {demoTimes.map((item, index) => {
               return <CustomRadio value={item.time}>{item.time}</CustomRadio>;
             })}
