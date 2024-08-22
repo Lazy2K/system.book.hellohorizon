@@ -4,7 +4,7 @@
 
 
 # system.book.hellohorizon
-A sales call booking system for HelloHorizon Ltd that will allow clients to: 
+A sales call booking system for [HelloHorizon Ltd](https://hellohorizon.uk) that will allow clients to: 
 - view availabilty
 - choose a suitable time
 - book a sales call
